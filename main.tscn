@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm4a0um36xavp"]
+
+[ext_resource type="PackedScene" uid="uid://ctsvtfc8nt1gj" path="res://overworld/overgame.tscn" id="1_2ljd0"]
+[ext_resource type="Script" path="res://main.gd" id="1_ijkev"]
+[ext_resource type="PackedScene" uid="uid://mfhlqelmkf8c" path="res://zoomworld/zoomgame.tscn" id="2_g3nus"]
+[ext_resource type="PackedScene" uid="uid://yj3towexgyb4" path="res://zoomworld/tree_collection.tscn" id="2_vhlrt"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ijkev")
+tree_collection_packed = ExtResource("2_vhlrt")
+
+[node name="overw" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 39.0
+offset_right = 237.0
+offset_bottom = 239.0
+
+[node name="outlinem" type="MarginContainer" parent="overw"]
+layout_mode = 2
+theme_override_constants/margin_left = -2
+theme_override_constants/margin_top = -2
+theme_override_constants/margin_right = -2
+theme_override_constants/margin_bottom = -2
+
+[node name="c" type="ColorRect" parent="overw/outlinem"]
+layout_mode = 2
+
+[node name="viewcont" type="SubViewportContainer" parent="overw"]
+texture_filter = 1
+layout_mode = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="view" type="SubViewport" parent="overw/viewcont"]
+handle_input_locally = false
+size = Vector2i(100, 100)
+render_target_update_mode = 4
+
+[node name="Overgame" parent="overw/viewcont/view" instance=ExtResource("1_2ljd0")]
+
+[node name="zoomw" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 286.0
+offset_top = 41.0
+offset_right = 486.0
+offset_bottom = 241.0
+
+[node name="outlinem" type="MarginContainer" parent="zoomw"]
+layout_mode = 2
+theme_override_constants/margin_left = -2
+theme_override_constants/margin_top = -2
+theme_override_constants/margin_right = -2
+theme_override_constants/margin_bottom = -2
+
+[node name="c" type="ColorRect" parent="zoomw/outlinem"]
+layout_mode = 2
+
+[node name="viewcont" type="SubViewportContainer" parent="zoomw"]
+texture_filter = 1
+layout_mode = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="view" type="SubViewport" parent="zoomw/viewcont"]
+handle_input_locally = false
+size = Vector2i(100, 100)
+render_target_update_mode = 4
+
+[node name="Zoomgame" parent="zoomw/viewcont/view" instance=ExtResource("2_g3nus")]
