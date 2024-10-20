@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6ffpcxa40myu"]
+[gd_scene load_steps=8 format=3 uid="uid://c6ffpcxa40myu"]
 
 [ext_resource type="Script" path="res://zoomworld/player_treeclimber.gd" id="1_sq42m"]
 [ext_resource type="Texture2D" uid="uid://bsgk7y001btvs" path="res://pixel/treeclimbing.png" id="2_uikmp"]
@@ -13,9 +13,13 @@ radius = 3.8
 radius = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypw2p"]
-size = Vector2(8, 2)
+size = Vector2(3, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6lays"]
+size = Vector2(1, 1)
 
 [node name="treeclimber" type="RigidBody2D" node_paths=PackedStringArray("body")]
+texture_filter = 1
 position = Vector2(50, 96)
 physics_material_override = SubResource("PhysicsMaterial_6jyhp")
 gravity_scale = 0.33
@@ -27,7 +31,7 @@ body = NodePath(".")
 texture = ExtResource("2_uikmp")
 hframes = 10
 vframes = 10
-frame = 12
+frame = 34
 
 [node name="floorcast" type="ShapeCast2D" parent="."]
 visible = false
@@ -38,6 +42,36 @@ target_position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_e1h02")
 
 [node name="climb_area_finder" type="Area2D" parent="."]
+position = Vector2(0, -1)
+collision_layer = 0
+collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="climb_area_finder"]
 shape = SubResource("RectangleShape2D_ypw2p")
+
+[node name="sit" type="Area2D" parent="."]
+position = Vector2(0, 1)
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sit"]
+shape = SubResource("RectangleShape2D_6lays")
+
+[node name="stam" type="Node2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="bg" type="Node2D" parent="stam"]
+position = Vector2(-4, -7)
+
+[node name="ColorRect" type="ColorRect" parent="stam/bg"]
+offset_right = 10.0
+offset_bottom = 1.0
+color = Color(0.380392, 0.458824, 0.407843, 1)
+
+[node name="fg" type="Node2D" parent="stam"]
+position = Vector2(-4, -7)
+
+[node name="ColorRect" type="ColorRect" parent="stam/fg"]
+offset_right = 10.0
+offset_bottom = 1.0
+color = Color(0.952941, 0.94902, 0.780392, 1)

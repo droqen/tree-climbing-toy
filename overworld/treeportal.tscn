@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://overworld/treeportal.gd" id="1_0lr7c"]
 [ext_resource type="Texture2D" uid="uid://bsgk7y001btvs" path="res://pixel/treeclimbing.png" id="2_8vom1"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b6r4d"]
-size = Vector2(8, 8)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_84wq0"]
+size = Vector2(8, 1)
 
 [node name="treeportal" type="StaticBody2D"]
 position = Vector2(45, 55)
@@ -18,12 +18,13 @@ vframes = 10
 frame = 11
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, 3)
 collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-shape = SubResource("RectangleShape2D_b6r4d")
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_84wq0")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-5, 2, 0, 0, 5, 2, 0, 5)

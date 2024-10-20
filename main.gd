@@ -36,6 +36,25 @@ func _ready() -> void:
 	set_worldmode(MODE_OVERWORLD)
 
 func _physics_process(_delta: float) -> void:
+	
+	# 100x100
+	var minratiox : int = 220
+	var minratioy : int = 120
+	var scaletime : int = mini( size.x / minratiox, size.y / minratioy )
+	$overw.size = Vector2i.ONE * scaletime * 100
+	$zoomw.size = Vector2i.ONE * scaletime * 100
+	overw_viewport.get_parent().stretch_shrink = scaletime
+	zoomw_viewport.get_parent().stretch_shrink = scaletime
+	$overw.position = Vector2i(size.x/4-50*scaletime, size.y/2 - 50*scaletime)
+	$zoomw.position = Vector2i(size.x*3/4-50*scaletime, size.y/2 - 50*scaletime)
+	
+	match worldmode:
+		MODE_OVERWORLD:
+			overw_game.modulate.a = lerp(overw_game.modulate.a, 1.00, 0.05)
+		_:
+			overw_game.modulate.a = lerp(overw_game.modulate.a, 0.25, 0.03)
+
+	
 	if treenode != null and treenode.name != treename:
 		zoomw_game.set_treeroom(null)
 		treenode = null # boop
@@ -47,7 +66,8 @@ func _physics_process(_delta: float) -> void:
 			treenode = source_treenode.duplicate()
 			zoomw_game.set_treeroom(treenode)
 	
-	if !zoomw_game.noroom and worldmode == MODE_OVERWORLD and Input.is_action_just_pressed("yes"):
+	#if !zoomw_game.noroom and worldmode == MODE_OVERWORLD and Input.is_action_just_pressed("yes"):
+	if !zoomw_game.noroom and worldmode == MODE_OVERWORLD and overw_game.exitdir:
 		zoomw_game.enterdir = overw_game.exitdir
 		set_worldmode(MODE_ZOOMWORLD)
 	

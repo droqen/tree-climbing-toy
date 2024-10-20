@@ -3,6 +3,9 @@ class_name ZoomGameScreen
 
 const TREECLIMBER_PREFAB = preload("res://zoomworld/treeclimber.tscn")
 var player : GamePlayer = null
+@onready var camera = $Camera2D
+var camvely : float = 0.0
+var camgrounded : bool = true
 
 func _ready() -> void:
 	for child in $Roomholder.get_children():
@@ -20,11 +23,24 @@ func _physics_process(_delta: float) -> void:
 			main.zoom_leave(-1)
 		elif player.position.x >= 100:
 			main.zoom_leave(1)
+		if player.position.y > 100: camgrounded = false
+		if player.position.y < 8: camgrounded = false
+		if player.position.y > 50 and player.position.y <= 96:
+			camgrounded = true
+	else:
+		camgrounded = true
+	
+	if camgrounded:
+		camvely = lerp(camvely, -camera.position.y * 0.05, 0.15)
+		camera.position.y += camvely
+	else:
+		camvely = lerp(camvely, (player.position.y-50-camera.position.y) * 0.05, 0.1)
+		camera.position.y += camvely
 	
 	if is_active and player==null:
 		player = TREECLIMBER_PREFAB.instantiate()
-		if enterdir.x < 0: player.position.x = 15
-		if enterdir.x > 0: player.position.x = 85
+		if enterdir.x < 0: player.position.x = 99
+		if enterdir.x > 0: player.position.x = 2
 		add_child(player)
 		player.owner = owner if owner else self
 	if !is_active and player!=null:
